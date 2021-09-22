@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../node_modules/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/all.css">
+    <title>EMI Calculator</title>
+    <style>
+        body{
+            background-color: #f9f9f9;
+        }
+        .emi-calculator{
+            background-color: #fff;
+            padding: 20px;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+        .emi-op{
+            background-color: hsla(216, 98%, 52%, 0.700);
+            margin-top: 20px;
+            border-radius: 5px;
+            color: #fff;
+        }
+        .headtext {
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+        .inputIcon {
+            position: relative;
+        }
+        .inputIcon input[type="text"] {
+            padding-left: 30px;
+        }
+        .inputIcon i {
+            position: absolute;
+            left: 0;
+            top: 4px;
+            padding: 9px 10px;
+            color: #aaa;
+            font-size: 13px;
+        }
+        .txt-container div{
+            margin-right: 10px;
+            font-size: 14px;
+        }
+        .txt-prog{
+            width: 300px;
+        }
+        .prog-container div span{
+            font-size: 12px;
+        }
+        #EMI{
+            font-size: 50px;
+            font-weight: 400;
+        }
+        #EMI::before{
+            content: &#8377;;
+        }
+    </style>
+    <script>
+        function AmountChange(){
+            document.getElementById("txtAmount").value = document.getElementById("rangeAmount").value;
+        }
+        function YearChange(){
+            document.getElementById("txtYear").value = document.getElementById("rangeYear").value;
+        }
+        function RateChange(){
+            document.getElementById("txtRate").value = document.getElementById("rangeRate").value;
+        }
+        function Calculate(){
+            document.getElementById("emi-sh").style.display = "block";
+
+            var amount = document.getElementById("rangeAmount").value;
+            var year = document.getElementById("rangeYear").value;
+            var rate = document.getElementById("rangeRate").value;
+
+            var roi = rate/(12*100);
+            var n = year * 12;
+
+            var x = (1+roi)**n;
+            var y = x-1;
+
+            var EMI = Math.round(amount * roi * x/y);
+
+            document.getElementById("EMI").innerHTML = EMI;
+
+        }
+    </script>
+</head>
+<body class="container">
+    <div class="mt-5">
+        <div class="headtext bg-primary p-3">
+            <h3 class="text-center m-0 text-white">EMI Calculator</h3>
+        </div>
+        <div class="emi-calculator">
+            <div class="emi-container">
+                <div class="row">
+                    <div class="col">
+                        <div class="txt-prog">
+                            <div class="txt-container d-flex align-items-center">
+                                <div>Amount You Need</div>
+                                <div class="inputIcon">
+                                    <input id="txtAmount" type="text" class="form-control" style="width: 150px;">
+                                    <i class="fas fa-rupee-sign"></i>
+                                  </div>
+                            </div>
+                            <div class="prog-container mt-3">
+                                <input onchange="AmountChange()" id="rangeAmount" type="range" class="form-range" min="50000" max="500000" value="50000">
+                                <div class="d-flex justify-content-between">
+                                    <span>&#8377; 50,000</span>
+                                    <span>&#8377; 5,00,000</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="txt-prog">
+                            <div class="txt-container d-flex align-items-center">
+                                <div>For</div>
+                                <div class="inputIcon">
+                                    <input id="txtYear" type="text" class="form-control" style="width: 70px;">
+                                    <i class="far fa-calendar-alt"></i>
+                                </div>
+                                <div>
+                                    Years
+                                </div>
+                            </div>
+                            <div class="prog-container mt-3">
+                                <input onchange="YearChange()" id="rangeYear" type="range" class="form-range" min="1" max="5" value="1">
+                                <div class="d-flex justify-content-between">
+                                    <span>1</span>
+                                    <span>5</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="txt-prog">
+                            <div class="txt-container d-flex align-items-center">
+                                <div>Intrest rate</div>
+                                <div class="inputIcon">
+                                    <input id="txtRate" type="text" class="form-control" style="width: 80px;">
+                                    <i class="fas fa-percent"></i>
+                                  </div>
+                            </div>
+                            <div class="prog-container mt-3">
+                                <input onchange="RateChange()" id="rangeRate" type="range" class="form-range" min="9" max="20" value="9">
+                                <div class="d-flex justify-content-between">
+                                    <span>9</span>
+                                    <span>20</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-5 d-flex justify-content-center">
+                <button onclick="Calculate()" class="btn btn-primary">Calculate</button>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center">
+        <div class="emi-op" id="emi-sh" style="display: none;">
+            <div class="p-4">
+                <div>
+                    <h5 class="fw-light">Your Monthly EMI will be per month</h5>
+                    <div>
+                        <h1><span style="font-weight: 400;">&#8377; </span><span id="EMI"></span></h1>
+                        <div>
+                            <button class="btn btn-light">Apply Personal Loan Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

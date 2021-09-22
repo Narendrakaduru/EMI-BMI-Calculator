@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../node_modules/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/all.css">
+    <title>BMI Calculator</title>
+    <style>
+        body{
+            background-color: #f9f9f9;
+        }
+        .bmi-calculator{
+            background-color: #fff;
+            padding: 20px;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+        .bmi-op{
+            background-color: hsla(216, 98%, 52%, 0.700);
+            border-radius: 5px;
+            color: #fff;
+            height: 290px;
+        }
+        .headtext {
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+        #BMI{
+            font-size: 50px;
+            font-weight: 400;
+        }
+        .bg-orange{
+            background-color: #fd7e14;
+        }
+        .triangle{
+            width: 0;
+            height: 0;
+            border-top: 9px solid #f7f7f7;
+            border-left: 9px solid transparent;
+            border-right: 9px solid transparent;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .lblweight, .weight-range{
+            font-size: 13px;
+            display: block;
+        }
+        .weight-range {
+            font-weight: 600;
+        }
+        .nav-pills .nav-link {
+            border-radius: 1.25rem !important;
+        }
+    </style>
+    <script>
+        function CalculateBMI(){
+            document.getElementById("emi-sh").style.display = "block";
+
+            var weight = document.getElementById("txtWeight").value;
+            var height = document.getElementById("txtHeight").value;
+            var tri = document.getElementById("tri");
+
+            var BMI = weight/(height/100*height/100);
+            BMI = BMI.toFixed(2);
+            document.getElementById("BMI").innerHTML = BMI;
+
+            if(BMI >= 0 && BMI < 25){
+                tri.style.left = "10%";
+            }else if(BMI >= 25 && BMI < 50){
+                tri.style.left = "34%";
+            }else if(BMI >= 50 && BMI <75){
+                tri.style.left = "60%";
+            }else if(BMI >= 75 && BMI < 100){
+                tri.style.left = "85%";
+            }
+
+
+        }
+        function CalculateIMP(){
+            document.getElementById("emi-sh").style.display = "block";
+
+            var weighti = document.getElementById("txtWeighti").value;
+            var heighti = document.getElementById("txtHeighti").value;
+
+            var IMP = 703 * (weighti / (heighti * heighti));
+            IMP = IMP.toFixed(2);
+            document.getElementById("IMP").innerHTML = IMP;
+
+            if(IMP >= 0 && IMP < 25){
+                tri.style.left = "10%";
+            }else if(IMP >= 25 && IMP < 50){
+                tri.style.left = "34%";
+            }else if(IMP >= 50 && IMP <75){
+                tri.style.left = "60%";
+            }else if(IMP >= 75 && IMP < 100){
+                tri.style.left = "85%";
+            }
+        }
+    </script>
+</head>
+<body class="container">
+    <div class="row">
+        <div class="mt-5 col">
+            <div class="headtext bg-primary p-3">
+                <h3 class="text-center m-0 text-white">BMI Calculator</h3>
+            </div>
+            <div class="bmi-calculator">
+                <div class="bmi-container">
+
+                    <nav>
+                        <div class="nav nav-pills">              
+                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#metric">Metric</button>
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#imperial">Imperial</button>
+                        </div>   
+                        <div class="tab-content mt-3">
+                            <div class="tab-pane show active" id="metric">
+                                <dl>
+                                    <dt>Age</dt>
+                                    <dd><input type="text" id="txtAge" placeholder="your Age" class="form-control"></dd>
+                                    <dt>Weight</dt>
+                                    <dd><input type="text" id="txtWeight" placeholder="Weight in kg" class="form-control"></dd>
+                                    <dt>Height</dt>
+                                    <dd><input type="text" id="txtHeight" placeholder="Height in cm" class="form-control"></dd>
+                                    <dt>Gender</dt>
+                                    <div class="d-flex mt-2">
+                                        <div class="form-check me-4">
+                                            <input class="form-check-input" type="radio" name="gender" id="Male">
+                                            <label class="form-check-label" for="gender">
+                                                Male
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="gender" id="Female">
+                                            <label class="form-check-label" for="gender">
+                                                Female
+                                            </label>
+                                        </div>
+                                    </div>
+                                </dl>
+
+                                <div class="mt-5 d-flex justify-content-center">
+                                    <button onclick="CalculateBMI()" class="btn btn-primary">Calculate</button>
+                                </div>
+
+                            </div>
+                            <div class="tab-pane" id="imperial">
+                                <dl>
+                                    <dt>Age</dt>
+                                    <dd><input type="text" id="txtAgei" placeholder="your Age" class="form-control"></dd>
+                                    <dt>Weight</dt>
+                                    <dd><input type="text" id="txtWeighti" placeholder="Weight in lb" class="form-control"></dd>
+                                    <dt>Height</dt>
+                                    <dd><input type="text" id="txtHeighti" placeholder="Height in inch" class="form-control"></dd>
+                                    <dt>Gender</dt>
+                                    <div class="d-flex mt-2">
+                                        <div class="form-check me-4">
+                                            <input class="form-check-input" type="radio" name="gender" id="Male">
+                                            <label class="form-check-label" for="gender">
+                                                Male
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="gender" id="Female">
+                                            <label class="form-check-label" for="gender">
+                                                Female
+                                            </label>
+                                        </div>
+                                    </div>
+                                </dl>
+
+                                <div class="mt-5 d-flex justify-content-center">
+                                    <button onclick="CalculateIMP()" class="btn btn-primary">Calculate</button>
+                                </div>
+
+                            </div>
+                        </div>    
+                    </nav>
+                   
+                </div>
+            </div>
+        </div>
+        <div class="mt-5 col d-flex justify-content-center">
+            <div class="bmi-op" id="emi-sh" style="display: none;">
+                <div class="p-4">
+                    <div>
+                        <p>BMI can be used to screen for weight categories that may lead to health problems but it is not diagnostic of the body fatness or health of an individual. Learn more about using BMI at cdc.gov</p>
+                        <h5 class="fw-light">Your BMI is <span id="BMI"></span> <span id="IMP"></span></h5>
+                    </div>
+                    <div class="position-relative">
+                        <div class="progress mt-4">
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-orange" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-danger" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="position-absolute" id="tri" style="top: -15px;">
+                                <div class="triangle"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            <span class="lblweight">Underweight</span>
+                            <span class="weight-range">Below 53kg</span>
+                        </div>
+                        <div class="col">
+                            <span class="lblweight">Normal</span>
+                            <span class="weight-range">53 - 71kg</span>
+                        </div>
+                        <div class="col">
+                            <span class="lblweight">Overweight</span>
+                            <span class="weight-range">71 - 85kg</span>
+                        </div>
+                        <div class="col">
+                            <span class="lblweight">Obese</span>
+                            <span class="weight-range">Above 85kg</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../node_modules/jquery/dist/jquery.js"></script>
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+</body>
+</html>
